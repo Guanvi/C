@@ -28,10 +28,10 @@ int Date :: calDays(Date firstDate,Date secondDate)
 
 	int y_Day=0;
 	int allDays=0;
-	Date maxDate;
-	Date minDate;
 	int maxDateMonthdays=0;
 	int minDateMonthdays=0;
+	Date maxDate;
+	Date minDate;
 	if((firstDate.getYear()>secondDate.getYear()) || ((firstDate.getYear()==secondDate.getYear()) && firstDate.getMonth()>secondDate.getMonth()) || ((firstDate.getYear()==secondDate.getYear())&&(firstDate.getMonth()==secondDate.getMonth()) &&(firstDate.getDay()>secondDate.getDay())))
 	{
 		maxDate=firstDate;
