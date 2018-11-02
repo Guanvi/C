@@ -22,16 +22,18 @@ bool Date :: isLeapYear(int year)
 	}
 }
 
-int Date :: calDays(Date firstDate,Date secondDate)
+int calDays(Date firstDate,Date secondDate)
 {
 	int * calMonthDays(Date date);
 
 	int y_Day=0;
 	int allDays=0;
-	int maxDateMonthdays=0;
-	int minDateMonthdays=0;
 	Date maxDate;
 	Date minDate;
+	int maxDateMonthdays=0;
+	int minDateMonthdays=0;
+
+	//确定较大日期和较小日期
 	if((firstDate.getYear()>secondDate.getYear()) || ((firstDate.getYear()==secondDate.getYear()) && firstDate.getMonth()>secondDate.getMonth()) || ((firstDate.getYear()==secondDate.getYear())&&(firstDate.getMonth()==secondDate.getMonth()) &&(firstDate.getDay()>secondDate.getDay())))
 	{
 		maxDate=firstDate;
@@ -40,10 +42,11 @@ int Date :: calDays(Date firstDate,Date secondDate)
 	}else{
 		maxDate=secondDate;
 		minDate=firstDate;
-	}
+	}			
+	//计算两个日期的元日相差多少天	
 	for(auto i=minDate.getYear();i<maxDate.getYear();i++)
 	{
-		if(isLeapYear(i))
+		if(minDate.isLeapYear(i))
 		{
 			y_Day+=LEAP_YEAR_DAYS;
 		}else{
@@ -53,15 +56,17 @@ int Date :: calDays(Date firstDate,Date secondDate)
 	}
 	int *maxMday=calMonthDays(maxDate);
 	int *minMday=calMonthDays(minDate);
-
+	//计算较大日期整月的总天数
 	for(int i=1;i<maxDate.getMonth();i++)
 	{
 		maxDateMonthdays+=*(maxMday+i-1);
 	}
+	//计算较小日期整月的总天数
 	for(int i=1;i<minDate.getMonth();i++)
 	{
 		minDateMonthdays+=*(minMday+i-1);
 	}
+	//相差天数=两日期元日相差天数+大日期
 	allDays=y_Day+maxDateMonthdays+maxDate.getDay()-minDateMonthdays-minDate.getDay();
 	return allDays;
 }
