@@ -1,4 +1,7 @@
 #include "date.h"
+#include <iostream>
+
+using namespace std;
 
 const int LEAP_YEAR_DAYS=366;
 const int NORMAL_YEAR_DAYS=365;
@@ -21,6 +24,59 @@ bool Date :: isLeapYear(int year)
 		return false;
 	}
 }
+
+
+int* Date :: calMonthDays(Date date)
+{
+	if(date.isLeapYear(date.getYear()))
+	{
+		return leapYearMonth;
+	}else{
+		return normalYearMonth;
+	}
+}
+
+
+bool Date :: isCorrectDate(int year,int month,int day)
+{
+	bool flag=true;
+
+	if(month>12 || month<1 || day<1)
+	{
+		flag=false;
+	}
+	if(isLeapYear(year))
+	{
+		if(day>*(leapYearMonth+month-1))
+		{
+			flag=false;
+		}
+	}else{
+		if(day>*(normalYearMonth+month-1))
+		{
+			flag=false;
+		}
+	}
+	return flag;
+}
+
+bool Date :: isInterCorrect(Date &date)
+{
+	bool flag=true;
+	int year,month,day;
+	cin >> year >> month >> day;
+	if(isCorrectDate(year,month,day))
+	{
+		date.setDate(year,month,day);
+	}else{
+		cout <<	"输入日期有误,请重新输入!" << endl;
+		flag=false;
+	}
+
+	return flag;
+}
+
+
 
 int calDays(Date firstDate,Date secondDate)
 {
@@ -54,8 +110,8 @@ int calDays(Date firstDate,Date secondDate)
 		}
 
 	}
-	int *maxMday=calMonthDays(maxDate);
-	int *minMday=calMonthDays(minDate);
+	int *maxMday=maxDate.calMonthDays(maxDate);
+	int *minMday=minDate.calMonthDays(minDate);
 	//计算较大日期整月的总天数
 	for(int i=1;i<maxDate.getMonth();i++)
 	{
@@ -69,14 +125,4 @@ int calDays(Date firstDate,Date secondDate)
 	//相差天数=两日期元日相差天数+大日期
 	allDays=y_Day+maxDateMonthdays+maxDate.getDay()-minDateMonthdays-minDate.getDay();
 	return allDays;
-}
-
-int* calMonthDays(Date date)
-{
-	if(date.isLeapYear(date.getYear()))
-	{
-		return leapYearMonth;
-	}else{
-		return normalYearMonth;
-	}
 }
