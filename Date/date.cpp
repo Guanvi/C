@@ -80,8 +80,6 @@ bool Date :: isInterCorrect(Date &date)
 
 int calDays(Date firstDate,Date secondDate)
 {
-	int * calMonthDays(Date date);
-
 	int y_Day=0;
 	int allDays=0;
 	Date maxDate;
